@@ -214,6 +214,7 @@ node build/builder.js <webhook> <n> --obfuscate --compress --target node16-win-x
 - [**Module Development**](docs/README.md#development) - Creating new modules
 - [**Browser Decryption**](docs/BROWSER_DECRYPTION.md) - Browser data handling
 - [**Development Guide**](docs/DEVELOPMENT.md) - Development workflow
+- [**NDI SDK Setup**](docs/ndi-setup.md) - DirectML/NDI SDK installation with Python 3.14 compatibility
 
 ### API Reference
 - **Service Manager**: Dependency injection and lifecycle management
