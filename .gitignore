@@ -105,3 +105,40 @@ Save-*/
 # Local development
 .local/
 .cache/
+
+# Python specific
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Python virtual environments
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# Python IDEs
+.spyderproject
+.spyproject
+.ropeproject
+
+# Demo and test outputs
+demo_output/
