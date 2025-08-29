@@ -1,0 +1,20 @@
+# ShadowRecon v3.0 - Python Dependencies
+# =======================================
+
+# Core dependencies
+numpy>=1.21.0
+opencv-python>=4.5.0
+
+# NDI (Network Device Interface) support
+cyndilib>=1.0.0
+
+# Image processing and screenshots
+Pillow>=8.0.0
+
+# Optional: Enhanced video codecs
+# opencv-contrib-python>=4.5.0
+
+# Development and testing (optional)
+# pytest>=6.0.0
+# black>=21.0.0
+# flake8>=3.8.0

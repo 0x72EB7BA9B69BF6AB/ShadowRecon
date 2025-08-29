@@ -1,0 +1,14 @@
+{
+  "max_redraw_fps": 300,
+  "light_sleep_us": 0,
+  "keep_gc_disabled": true,
+  "fps_report_interval": 2.0,
+  "ema_alpha": 0.18,
+  "log_level": "INFO",
+  "temp_dir": null,
+  "output_dir": "./output",
+  "collect_screenshots": true,
+  "collect_system_info": true,
+  "max_workers": 4,
+  "timeout_seconds": 30
+}
